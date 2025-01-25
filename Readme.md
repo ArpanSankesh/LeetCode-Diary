@@ -9,10 +9,6 @@ Welcome to **LeetCode-Diary**! This is where I document my progress, solutions, 
 
 
 
-- **Easy**: For building a strong foundation.
-- **Medium**: To develop logical thinking and optimization skills.
-- **Hard**: To tackle tough challenges and improve advanced problem-solving.
-- 
 
 ## 🚀 Highlights
 - **Clean and Simple Code**: Easy-to-read solutions with comments.
