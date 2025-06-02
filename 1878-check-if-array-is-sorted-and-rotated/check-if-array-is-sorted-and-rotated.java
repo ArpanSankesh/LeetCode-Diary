@@ -10,10 +10,9 @@ class Solution {
             if(nums[nums.length - 1] > nums[0]){
                 count++;
             }
-        if(count <= 1){
-            return true;
-        }
-            return false;
+        
+            return count <= 1;
+        
        
     }
 }
