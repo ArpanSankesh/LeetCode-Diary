@@ -4,18 +4,20 @@ class Solution {
             return false;
         }
 
-        Map<Character, Integer> map1 = new HashMap<>();
-        Map<Character, Integer> map2 = new HashMap<>();
+        Map<Character, Integer> map = new HashMap<>();
 
         for (int i = 0; i < s.length(); i++) {
             char ch = s.charAt(i);
-            map1.put(ch, map1.getOrDefault(ch, 0) + 1);
+            char ch2 = t.charAt(i);
+            map.put(ch, map.getOrDefault(ch, 0) + 1);
+            map.put(ch2, map.getOrDefault(ch2, 0) -1 );
         }
-
-        for (int i = 0; i < t.length(); i++) {
+        for(int i = 0; i < t.length(); i++){
             char ch = t.charAt(i);
-            map2.put(ch, map2.getOrDefault(ch, 0) + 1);
+        if(map.get(ch) < 0 ){
+            return false;
         }
-        return map1.equals(map2);
+        }
+        return true;
     }
 }
