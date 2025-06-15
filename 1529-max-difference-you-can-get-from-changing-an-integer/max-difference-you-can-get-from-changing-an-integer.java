@@ -1,36 +1,36 @@
 class Solution {
-    public int maxDiff(int num) {
-        String s = Integer.toString(num);
+    
+    // Helper method to replace all instances of digit x with digit y in the number
+    public String replacexy(int num, int x, int y) {
+        String numStr = Integer.toString(num);
+        char[] chars = numStr.toCharArray();
 
-        // Make max by replacing the first non-9 digit with 9
-        char toReplaceMax = 0;
-        for (char c : s.toCharArray()) {
-            if (c != '9') {
-                toReplaceMax = c;
-                break;
+        for (int i = 0; i < chars.length; i++) {
+            if (chars[i] - '0' == x) {
+                chars[i] = (char)(y + '0');
             }
         }
-        String max = s.replace(toReplaceMax, '9');
 
-        // Make min by replacing the first non-1 digit in the first position, otherwise first non-0
-        char toReplaceMin = 0;
-        if (s.charAt(0) != '1') {
-            toReplaceMin = s.charAt(0);
-            s = s.replace(toReplaceMin, '1');
-        } else {
-            for (int i = 1; i < s.length(); i++) {
-                if (s.charAt(i) != '0' && s.charAt(i) != '1') {
-                    toReplaceMin = s.charAt(i);
-                    break;
+        return new String(chars);
+    }
+
+    public int maxDiff(int num) {
+        int maxNum = num;
+        int minNum = num;
+
+        for (int x = 0; x < 10; x++) {
+            for (int y = 0; y < 10; y++) {
+                String s = replacexy(num, x, y);
+
+                // Skip if number has leading zero
+                if (s.charAt(0) != '0') {
+                    int currNum = Integer.parseInt(s);
+                    maxNum = Math.max(maxNum, currNum);
+                    minNum = Math.min(minNum, currNum);
                 }
             }
-            if (toReplaceMin != 0)
-                s = s.replace(toReplaceMin, '0');
         }
 
-        int maxVal = Integer.parseInt(max);
-        int minVal = Integer.parseInt(s);
-
-        return maxVal - minVal;
+        return maxNum - minNum;
     }
 }
