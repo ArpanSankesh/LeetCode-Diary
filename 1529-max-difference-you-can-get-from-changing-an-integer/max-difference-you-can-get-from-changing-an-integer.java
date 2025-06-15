@@ -1,33 +1,40 @@
 class Solution {
     
-    // Helper method to replace all instances of digit x with digit y in the number
-    public String replacexy(int num, int x, int y) {
-        String numStr = Integer.toString(num);
-        char[] chars = numStr.toCharArray();
-
-        for (int i = 0; i < chars.length; i++) {
-            if (chars[i] - '0' == x) {
-                chars[i] = (char)(y + '0');
+    // Replaces all occurrences of digit x with digit y in num
+    public String replacexy(int num, char x, char y) {
+        char[] numChars = Integer.toString(num).toCharArray();
+        for (int i = 0; i < numChars.length; i++) {
+            if (numChars[i] == x) {
+                numChars[i] = y;
             }
         }
-
-        return new String(chars);
+        return new String(numChars);
     }
 
     public int maxDiff(int num) {
-        int maxNum = num;
-        int minNum = num;
+        int maxNum = num, minNum = num;
+        String numStr = Integer.toString(num);
+        int n = numStr.length();
 
-        for (int x = 0; x < 10; x++) {
-            for (int y = 0; y < 10; y++) {
-                String s = replacexy(num, x, y);
+        // Finding maxNum by replacing the first non-'9' digit with '9'
+        for (int i = 0; i < n; i++) {
+            if (numStr.charAt(i) != '9') {
+                String maxStr = replacexy(num, numStr.charAt(i), '9');
+                maxNum = Integer.parseInt(maxStr);
+                break;
+            }
+        }
 
-                // Skip if number has leading zero
-                if (s.charAt(0) != '0') {
-                    int currNum = Integer.parseInt(s);
-                    maxNum = Math.max(maxNum, currNum);
-                    minNum = Math.min(minNum, currNum);
-                }
+        // Finding minNum by replacing a digit with '1' or '0' depending on position
+        for (int i = 0; i < n; i++) {
+            if (i == 0 && numStr.charAt(i) != '1') {
+                String minStr = replacexy(num, numStr.charAt(i), '1');
+                minNum = Integer.parseInt(minStr);
+                break;
+            } else if (numStr.charAt(i) != '0' && numStr.charAt(i) != numStr.charAt(0)) {
+                String minStr = replacexy(num, numStr.charAt(i), '0');
+                minNum = Integer.parseInt(minStr);
+                break;
             }
         }
 
