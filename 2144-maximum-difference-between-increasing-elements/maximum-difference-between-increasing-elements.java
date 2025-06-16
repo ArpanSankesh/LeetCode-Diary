@@ -1,14 +1,14 @@
 class Solution {
     public int maximumDifference(int[] nums) {
         int n = nums.length;
-        int maxDiff = -1;
-        for(int i = 0; i < n; i++){
-            for(int j = i + 1; j < n; j++){
-                if(nums[j] > nums[i]){
-                maxDiff = Math.max(maxDiff, nums[j] - nums[i]);
-                }
-            }
+        int res = -1;
+        int min = nums[0];
+        for(int j = 1; j < n; j++){
+                if(nums[j] > min){
+                    res = Math.max(res, nums[j] - min);
+                }   
+                min = Math.min(min, nums[j]);
         }
-        return maxDiff;
+        return res;
     }
 }
