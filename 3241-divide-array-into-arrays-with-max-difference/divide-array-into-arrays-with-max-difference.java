@@ -2,7 +2,8 @@ class Solution {
     public int[][] divideArray(int[] nums, int k) {
         int n = nums.length;
         Arrays.sort(nums);
-        List<List<Integer>> result = new ArrayList<>();
+        int[][] result = new int[n/3][3];
+        int groupIndex = 0;
 
         for(int i = 0; i < n; i += 3){
             int a = nums[i];
@@ -13,16 +14,11 @@ class Solution {
                 return new int[0][0];
             }
 
-            result.add(Arrays.asList(a,b,c));
+            result[groupIndex][0] = a;
+            result[groupIndex][1] = b;
+            result[groupIndex][2] = c;
+            groupIndex++;
         }
-        int[][] output = new int[result.size()][3];
-        for(int i = 0; i < result.size(); i++){
-            List<Integer> group = result.get(i);
-            output[i][0] = group.get(0);
-            output[i][1] = group.get(1);
-            output[i][2] = group.get(2);
-        }
-
-        return output;
+        return result;
     }
 }
