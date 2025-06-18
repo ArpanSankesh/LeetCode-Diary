@@ -1,6 +1,10 @@
 class Solution {
     public int[][] divideArray(int[] nums, int k) {
+
         int n = nums.length;
+        //Return empty result if input size is not divisible by 3 (invalid case)
+        if (n % 3 != 0) return new int[0][0]; 
+
         Arrays.sort(nums);
         int[][] result = new int[n/3][3];
         int groupIndex = 0;
