@@ -1,27 +1,32 @@
+
 class Solution {
     public int minimumDeletions(String word, int k) {
-
-        Map<Character, Integer> map = new HashMap<>();
-        for (int i = 0; i < word.length(); i++) {
-            char ch = word.charAt(i);
-            map.put(ch, map.getOrDefault(ch, 0) + 1);
+        // Step 1: Frequency array for a–z
+        int[] freq = new int[26];
+        for (char ch : word.toCharArray()) {
+            freq[ch - 'a']++;
         }
-        int minDeletion = Integer.MAX_VALUE;
-        List<Integer> freqs = new ArrayList<>(map.values());
 
-        for(int target = 1; target <= Collections.max(freqs); target++){
-            int deletion = 0;
+        // Step 2: Sort frequencies
+        Arrays.sort(freq);
 
-            for(int freq : freqs){
-                if(freq < target){
-                    deletion += freq;
-                } else if(freq > target + k){
-                    deletion += (freq - (target + k));
-                }
+        int result = word.length();
+        int cumulativeDeleted = 0;
+
+        // Step 3: Try each freq[i] as the minimum frequency to keep
+        for (int i = 0; i < 26; i++) {
+            int del = cumulativeDeleted;
+
+            // For all j > i, check if freq[j] > freq[i] + k
+            for (int j = 25; j > i; j--) {
+                if (freq[j] - freq[i] <= k) break;
+                del += freq[j] - freq[i] - k;
             }
-            minDeletion = Math.min(minDeletion, deletion);
-        }
-        return minDeletion;
 
+            result = Math.min(result, del);
+            cumulativeDeleted += freq[i];
+        }
+
+        return result;
     }
 }
