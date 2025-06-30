@@ -8,8 +8,7 @@ class Solution {
         }
         for(int key : map.keySet()){
             if(map.containsKey(key + 1)){
-            int count = map.get(key) + map.get(key + 1);
-            longestHarmSeq = Math.max(longestHarmSeq, count);
+            longestHarmSeq = Math.max(longestHarmSeq, map.get(key) + map.get(key + 1));
             }
         }
         return longestHarmSeq;
