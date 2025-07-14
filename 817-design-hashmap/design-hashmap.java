@@ -1,28 +1,59 @@
 class MyHashMap {
-    
-    int[] map;
+    private static class Pair {
+        int key, value;
+        Pair(int key, int value) {
+            this.key = key;
+            this.value = value;
+        }
+    }
+
+    private final int SIZE = 10000;
+    private List<Pair>[] buckets;
+
     public MyHashMap() {
-        map = new int[1000001];
-        Arrays.fill(map, -1);
+        buckets = new LinkedList[SIZE];
     }
-    
+
+    private int hash(int key) {
+        return key % SIZE;
+    }
+
     public void put(int key, int value) {
-        map[key] = value;
+        int index = hash(key);
+        if (buckets[index] == null) {
+            buckets[index] = new LinkedList<>();
+        }
+        for (Pair pair : buckets[index]) {
+            if (pair.key == key) {
+                pair.value = value;
+                return;
+            }
+        }
+        buckets[index].add(new Pair(key, value));
     }
-    
+
     public int get(int key) {
-        return map[key];
+        int index = hash(key);
+        if (buckets[index] != null) {
+            for (Pair pair : buckets[index]) {
+                if (pair.key == key) {
+                    return pair.value;
+                }
+            }
+        }
+        return -1;
     }
-    
+
     public void remove(int key) {
-        map[key] = -1;
+        int index = hash(key);
+        if (buckets[index] != null) {
+            Iterator<Pair> it = buckets[index].iterator();
+            while (it.hasNext()) {
+                if (it.next().key == key) {
+                    it.remove();
+                    return;
+                }
+            }
+        }
     }
 }
-
-/**
- * Your MyHashMap object will be instantiated and called as such:
- * MyHashMap obj = new MyHashMap();
- * obj.put(key,value);
- * int param_2 = obj.get(key);
- * obj.remove(key);
- */
